@@ -5,6 +5,7 @@ namespace App\Livewire\Pages;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Category;
+use App\Services\CartService;
 
 class Products extends Component
 {
@@ -18,6 +19,16 @@ class Products extends Component
     {
         $this->categories = Category::all();
     }
+
+    public function addToCart($productId)
+    {
+
+        $this->cartService = app(CartService::class);
+        $this->cartService->add($productId);
+
+        $this->dispatch('product-added');
+    }
+
 
     public function selectCategory($categoryId)
     {

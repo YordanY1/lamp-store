@@ -11,6 +11,14 @@
             <a href="/about" wire:navigate class="hover:text-green-600">About Us</a>
             <a href="/contact" wire:navigate class="hover:text-green-600">Contact</a>
         </nav>
+        <a href="/cart" wire:navigate class="relative hover:text-green-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-textGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18l-2 13H5L3 3z" />
+                <circle cx="9" cy="21" r="1" fill="currentColor" />
+                <circle cx="19" cy="21" r="1" fill="currentColor" />
+            </svg>
+            <span class="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full px-2">{{ $cartCount }}</span>
+        </a>
         <div class="sm:hidden" x-data="{ open: false }">
             <button @click="open = !open" class="focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-textGreen" fill="none" viewBox="0 0 24 24"
