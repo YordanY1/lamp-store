@@ -21,7 +21,7 @@
                         <p class="text-textGreen font-bold mt-4">${{ number_format($product->price, 2) }}</p>
                         <div class="flex justify-between mt-4">
                             <button class="bg-transparent border-2 border-textGreen text-textGreen px-4 py-2 rounded hover:bg-textGreen hover:text-white transition-colors duration-200">Details</button>
-                            <button class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-900 transition-colors duration-200">Buy Now</button>
+                            <button wire:click="addToCart({{ $product->id }})" class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-900 transition-colors duration-200">Buy Now</button>
                         </div>
                     </div>
                 </div>
@@ -29,3 +29,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('product-added', () => {
+        Swal.fire({
+            title: 'Success!',
+            text: 'You have successfully added a product!',
+            icon: 'success',
+            confirmButtonText: 'OK',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+        });
+    });
+</script>
