@@ -9,13 +9,18 @@
     @livewireStyles
 </head>
 
-<body class="flex flex-col min-h-screen antialiased">
+<body class="flex flex-col min-h-screen antialiased bg-bgColor">
 
-    <main class="flex flex-col flex-1 gap-4 p-3 pt-6 sm:p-8">
+    <livewire:header />
+
+    <main class="flex flex-col">
         {{ $slot }}
     </main>
 
     @livewireScripts
+
+    <livewire:footer />
+
 </body>
 
 </html>
