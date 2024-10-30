@@ -10,8 +10,9 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: '#123456',
-                secondary: '#654321',
+                textGreen: '#10B981',
+                secondary: '#FFFFFF',
+                bgColor: '#F3F4F6',
             },
             fontFamily: {
                 sans: ['Nunito', 'sans-serif'],
