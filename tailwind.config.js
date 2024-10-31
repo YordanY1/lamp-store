@@ -15,7 +15,7 @@ export default {
                 bgColor: '#F3F4F6',
             },
             fontFamily: {
-                sans: ['Nunito', 'sans-serif'],
+                sans: ['Nunito', 'Lato', 'sans-serif'],
             },
         },
     },

@@ -1,12 +1,12 @@
 <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold text-center text-textGreen mb-6">Your Shopping Cart</h2>
+    <h2 class="text-3xl font-bold text-center text-textGreen mb-6 font-sans">Your Shopping Cart</h2>
 
     @if (empty($cartItems))
-        <p class="text-gray-500 text-center">Your cart is empty.</p>
+        <p class="text-gray-500 text-center font-sans">Your cart is empty.</p>
     @else
         <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
             @foreach ($cartItems as $productId => $item)
-                <div class="flex justify-between items-center mb-4">
+                <div class="flex justify-between items-center mb-4 font-sans">
                     <div class="flex items-center space-x-4">
                         <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="w-20 h-20 object-cover rounded-md shadow-sm">
                         <div>
@@ -30,7 +30,7 @@
                 <button wire:click="clearCart" class="bg-gray-700 text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-900">Clear Cart</button>
             </div>
             <div class="flex justify-end mt-4">
-                <a href="/checkout" wire:navigate class="bg-green-700 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-900">Proceed to Checkout</a>
+                <a href="/checkout" wire:navigate class="bg-textGreen text-white px-4 py-2 rounded-md shadow-md hover:bg-green-900">Proceed to Checkout</a>
             </div>
         </div>
     @endif
