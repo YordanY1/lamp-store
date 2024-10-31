@@ -27,6 +27,8 @@ class Checkout extends Component
         $this->cartItems = $cartService->getCart();
         $setupIntent = $checkoutService->createSetupIntent();
         $this->clientSecret = $setupIntent->client_secret;
+
+        $this->dispatch('refreshStripe');
     }
 
     public function savePaymentMethod($paymentMethodId)
@@ -104,4 +106,3 @@ class Checkout extends Component
         ]);
     }
 }
-
