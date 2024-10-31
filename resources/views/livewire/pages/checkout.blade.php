@@ -50,63 +50,58 @@
             <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-blue-700 transition duration-200">Place Order</button>
         </div>
     </form>
+</div>
 
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log("DOM Loaded");
 
-            const stripe = Stripe('{{ config("services.stripe.key") }}');
-            console.log("Stripe initialized with key:", '{{ config("services.stripe.key") }}');
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeStripe();
+    });
 
-            const elements = stripe.elements();
-            const card = elements.create('card', {
-                hidePostalCode: true,
-                style: {
-                    base: {
-                        fontSize: '16px',
-                    }
+    window.addEventListener('refreshStripe', function () {
+        initializeStripe();
+    });
+
+    function initializeStripe() {
+        if (typeof Stripe === 'undefined') {
+            console.error('Stripe библиотеката не е заредена.');
+            return;
+        }
+
+        const stripe = Stripe('{{ config("services.stripe.key") }}');
+        const elements = stripe.elements();
+        const card = elements.create('card', {
+            hidePostalCode: true,
+            style: {
+                base: {
+                    fontSize: '16px',
                 }
-            });
-            card.mount('#card-element');
-            console.log("Card element mounted successfully");
+            }
+        });
+        card.mount('#card-element');
+        console.log("Stripe card element initialized and mounted successfully");
 
-            let isProcessing = false;
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-            document.querySelector('form').addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                if (isProcessing) {
-                    console.log("Form is already being processed, skipping this submit");
-                    return;
+            stripe.createPaymentMethod({
+                type: 'card',
+                card: card,
+                billing_details: {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
                 }
-
-                isProcessing = true;
-                console.log("Form submitted");
-
-                stripe.createPaymentMethod({
-                    type: 'card',
-                    card: card,
-                    billing_details: {
-                        name: document.getElementById('name').value,
-                        email: document.getElementById('email').value,
-                        phone: document.getElementById('phone').value,
-                    }
-                }).then(function (result) {
-                    if (result.error) {
-                        console.error('Error creating payment method:', result.error);
-                        alert('Грешка при създаване на Payment Method: ' + result.error.message);
-                        isProcessing = false;
-                    } else {
-                        console.log('Payment method successfully created:', result.paymentMethod.id);
-
-                        @this.savePaymentMethod(result.paymentMethod.id).then(function () {
-                            console.log("Payment method ID dispatched to Livewire");
-                            isProcessing = false;
-                        });
-                    }
-                });
+            }).then(function (result) {
+                if (result.error) {
+                    console.error('Error creating payment method:', result.error);
+                    alert('Грешка при създаване на Payment Method: ' + result.error.message);
+                } else {
+                    @this.savePaymentMethod(result.paymentMethod.id).then(function () {
+                        console.log("Payment method ID dispatched to Livewire");
+                    });
+                }
             });
         });
-    </script>
-</div>
+    }
+</script>
