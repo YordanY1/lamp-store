@@ -1,4 +1,4 @@
-<div x-data="{ showFilters: false }" class="container mx-auto flex flex-col sm:flex-row py-32 px-4 sm:px-6 lg:px-8">
+<div x-data="{ showFilters: false }" class="container mx-auto flex flex-col sm:flex-row py-32 px-4 sm:px-6 lg:px-8 font-sans">
 
     <!-- Mobile Filter Toggle Button -->
     <div class="sm:hidden mb-6">
@@ -49,7 +49,6 @@
         </div>
     </div>
 
-
     <aside class="w-1/4 pr-4 hidden sm:block sticky top-32">
         <div class="bg-white shadow-md rounded-lg p-4">
             <h2 class="text-2xl font-bold text-textGreen mb-4">Categories</h2>
@@ -95,7 +94,7 @@
 
     <!-- Main Content for Products -->
     <div class="w-full sm:w-3/4 pl-0 sm:pl-4">
-        <h2 class="text-2xl font-bold text-center text-textGreen mb-6">
+        <h2 class="text-2xl font-bold text-center text-textGreen mb-6 font-sans">
             {{ $selectedCategory ? $categories->firstWhere('id', $selectedCategory)->name : 'All Products' }}
         </h2>
 
@@ -103,7 +102,7 @@
             @foreach ($products as $product)
                 <div class="bg-white shadow-md rounded-lg overflow-hidden">
                     <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
-                    <div class="p-4">
+                    <div class="p-4 font-sans">
                         <h3 class="text-lg font-semibold">{{ $product->name }}</h3>
                         <p class="text-gray-700 mt-2">{{ $product->description }}</p>
                         <p class="text-textGreen font-bold mt-4">${{ number_format($product->price, 2) }}</p>
@@ -119,7 +118,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     document.addEventListener('product-added', () => {

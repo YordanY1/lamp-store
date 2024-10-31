@@ -1,8 +1,8 @@
-<div class="container mx-auto p-8 bg-white shadow-lg rounded-lg">
-    <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">Checkout</h2>
+<div class="container mx-auto p-8 bg-secondary shadow-lg rounded-lg">
+    <h2 class="text-3xl font-bold text-center mb-6 text-textGreen">Checkout</h2>
 
     <div class="mb-8">
-        <h3 class="text-2xl font-bold text-gray-700 mb-4">Your Cart</h3>
+        <h3 class="text-2xl font-bold text-textGreen mb-4">Your Cart</h3>
         <div class="space-y-4">
             @foreach($cartItems as $item)
                 <div class="flex items-center border-b pb-4">
@@ -23,22 +23,22 @@
     <form wire:submit.prevent="submitOrder" class="space-y-4">
         <div>
             <label for="name" class="block text-lg font-semibold text-gray-600">Full Name</label>
-            <input type="text" id="name" wire:model="name" placeholder="John Doe" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-blue-500 outline-none">
+            <input type="text" id="name" wire:model="name" placeholder="John Doe" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-textGreen outline-none">
         </div>
 
         <div>
             <label for="email" class="block text-lg font-semibold text-gray-600">Email</label>
-            <input type="email" id="email" wire:model="email" placeholder="example@mail.com" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-blue-500 outline-none">
+            <input type="email" id="email" wire:model="email" placeholder="example@mail.com" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-textGreen outline-none">
         </div>
 
         <div>
             <label for="phone" class="block text-lg font-semibold text-gray-600">Phone</label>
-            <input type="text" id="phone" wire:model="phone" placeholder="+1 234 567 890" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-blue-500 outline-none">
+            <input type="text" id="phone" wire:model="phone" placeholder="+1 234 567 890" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-textGreen outline-none">
         </div>
 
         <div>
             <label for="address" class="block text-lg font-semibold text-gray-600">Address</label>
-            <input type="text" id="address" wire:model="address" placeholder="123 Main St, Apt 4B" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-blue-500 outline-none">
+            <input type="text" id="address" wire:model="address" placeholder="123 Main St, Apt 4B" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-textGreen outline-none">
         </div>
 
         <div>
@@ -46,12 +46,25 @@
             <div id="card-element" class="border-2 border-gray-300 p-3 rounded-lg"></div>
         </div>
 
+          <!-- Terms and Conditions Checkbox -->
+          <div class="flex items-center">
+            <input type="checkbox" id="terms" wire:model="termsAccepted" class="mr-2">
+            <label for="terms" class="text-gray-600">
+                I agree to the
+                <a href="{{ route('terms') }}" target="_blank" class="text-textGreen hover:underline">
+                    Terms and Conditions
+                </a>
+            </label>
+        </div>
+
         <div class="text-center">
-            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-blue-700 transition duration-200">Place Order</button>
+            <button type="submit"
+                    class="bg-textGreen text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-green-700 transition duration-200">
+                Place Order
+            </button>
         </div>
     </form>
 </div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -64,7 +77,6 @@
 
     function initializeStripe() {
         if (typeof Stripe === 'undefined') {
-            console.error('Stripe библиотеката не е заредена.');
             return;
         }
 
@@ -79,7 +91,6 @@
             }
         });
         card.mount('#card-element');
-        console.log("Stripe card element initialized and mounted successfully");
 
         document.querySelector('form').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -94,12 +105,9 @@
                 }
             }).then(function (result) {
                 if (result.error) {
-                    console.error('Error creating payment method:', result.error);
-                    alert('Грешка при създаване на Payment Method: ' + result.error.message);
+                    alert('Error: ' + result.error.message);
                 } else {
-                    @this.savePaymentMethod(result.paymentMethod.id).then(function () {
-                        console.log("Payment method ID dispatched to Livewire");
-                    });
+                    @this.savePaymentMethod(result.paymentMethod.id);
                 }
             });
         });
