@@ -1,15 +1,16 @@
 <header x-data="{ scrolled: false }" @scroll.window="scrolled = window.scrollY > 50"
-    class="fixed top-0 left-0 w-full bg-white shadow-md z-50 transition-colors duration-300">
+    :class="{'bg-gray-900 shadow-lg': scrolled, 'bg-white shadow-md': !scrolled}"
+    class="fixed top-0 left-0 w-full z-50 transition-colors duration-300 font-sans">
     <div class="container mx-auto flex items-center justify-between p-4 sm:py-6">
         <a href="/" wire:navigate class="flex items-center space-x-4">
             <img src="{{ asset('images/logo.webp') }}" alt="Logo" class="h-12 w-12">
             <span class="text-2xl font-bold text-textGreen">Lamp Store</span>
         </a>
         <nav class="hidden sm:flex items-center space-x-6">
-            <a href="/" wire:navigate class="hover:text-green-600">Home</a>
-            <a href="/products" wire:navigate class="hover:text-green-600">Products</a>
-            <a href="/about" wire:navigate class="hover:text-green-600">About Us</a>
-            <a href="/contact" wire:navigate class="hover:text-green-600">Contact</a>
+            <a href="/" wire:navigate class="hover:text-green-600 text-gray-700">Home</a>
+            <a href="/products" wire:navigate class="hover:text-green-600 text-gray-700">Products</a>
+            <a href="/about" wire:navigate class="hover:text-green-600 text-gray-700">About Us</a>
+            <a href="/contact" wire:navigate class="hover:text-green-600 text-gray-700">Contact</a>
         </nav>
         <a href="/cart" wire:navigate class="relative hover:text-green-600">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-textGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor">

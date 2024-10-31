@@ -13,12 +13,14 @@ class Checkout extends Component
     public $totalAmount, $clientSecret, $paymentMethodId;
     public $cartItems = [];
     public $isProcessing = false;
+    public $termsAccepted = false;
 
     protected $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|email',
         'phone' => 'required|string',
         'address' => 'required|string',
+        'termsAccepted' => 'accepted',
     ];
 
     public function mount(CheckoutService $checkoutService, CartService $cartService)
